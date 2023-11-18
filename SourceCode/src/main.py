@@ -1,7 +1,8 @@
 import requests
 import json
+import time
 from datetime import date
-import PySimpleGUI as ui
+import PySimpleGUI as sg
 
 API_key = '7vkjinjkwg6CCJY7qp32xMwWCzziNrwq'
 url = 'https://developers.cathaypacific.com/hackathon-apigw'
@@ -48,8 +49,196 @@ def flightDetails(FlightID):
     data = res.content
     return data
 
+def check_connection(API_key):
+    headers = {'apiKey': API_key}
+    response = requests.get(url, headers=headers)
+    return response.status_code
 
 def main():
+    today_date = date.today()
+    date_str = "Today is: " + str(today_date)
+    layout = [
+        [sg.Text("Welcome to Cathay SwiftServe AI System made by Team_068: Cathay skyline")],
+        [sg.Text(date_str)],
+        [sg.Button("Enter", key="-ENTER-")],
+        [sg.Text("", key="-STATUS-", auto_size_text=True, visible=False)]
+    ]
+
+    window = sg.Window("Cathay SwiftServe AI", layout, finalize=True)
+
+    while True:
+        event, values = window.read()
+
+        if event == sg.WINDOW_CLOSED:
+            break
+        elif event == "-ENTER-":
+            window["-STATUS-"].update("Connecting to Cathay Network, please wait a second...", visible=True)
+            window.refresh()
+
+            #Call your connect_function here
+            connected = check_connection(API_key)
+            if connected == 200:
+                layout_main = [
+                    [sg.Text("Connected successfully!", key ="-CON-", auto_size_text=True)]
+                ]
+                window.close()
+                window = sg.Window("Success", layout_main, finalize=True)
+                time.sleep(5)
+                window.close()
+            #    window["-STATUS-"].update("Connected successfully!")
+            #    print("Connected successfully!")
+            else:
+                fail_code = 'Connect failed with Status Code = ' + connected
+                layout_connection = [
+                    [sg.Text(fail_code, key ="-MAIN-", auto_size_text=True)]
+                ]
+                window.close()
+                window = sg.Window("Failed", layout_connection, finalize=True)
+                time.sleep(5)
+                window.close()
+            window.refresh()
+    window.close()
+
+    #connected = check_connection(API_key)
+    #while connected == 200:
+    styling = '*' * 50
+    styling_str = str(styling) 
+    layout_main = [
+        [sg.Text(styling_str)],
+        [sg.Text("Table of Functions: \n 1.Search passengers based on passenger ID. \n 2.Search passengers bag allowance based on passenger ID and segment ID. \n 3.Search passengers regulatory requirements based on passenger ID and segment ID. \n 4.Search passengers seatMap based on passenger ID and segment ID. \n 5.Search flight details based on flight number.")],
+        [sg.Text("Input 1, 2, 3, 4 or 5 for one of the functions, otherwise automatically terminating: ")],
+        [sg.Input(key='-IN-')],
+        [sg.Button('Enter'), sg.Button('Exit')],
+        #[sg.Text("",key='-CON-', auto_size_text=True, visible=False)]
+        ]
+    window = sg.Window('Table of Functions', layout_main, finalize=True)
+    pidinput = "Please input your Passenger ID: "
+    sidinput = "Please input your Segment ID: "
+    fidinput = "Please input your Flight ID: "
+    while True: 
+        event, values = window.read()
+        if event ==sg.WIN_CLOSED or event == 'Exit':
+            #window['-CON-'].update("The program has terminated!", auto_size_text=True, visible=True)
+            window.close()
+            #window = sg.Window("Success", layout_main, finalize=True)
+            #time.sleep(3)
+            #window.close()
+            #input("The program has terminated!")
+    #if event =='Enter':
+        # layout_basic = [
+        #     [sg.Text("", key="-DYNAMIC-")],
+        #     [sg.Input(key='-IN-')],
+        #     [sg.Button("Submit", key='-SUBMIT-')]
+        #     [sg.Text("", key="-REPLY-", visible=False)]
+        #     [sg.Button("Back to Main", key="-END-", visible=False)]
+        # ]
+        #window2 = sg.Window("Reply", layout_basic, finalize=True)
+        #while True:
+        #    event, values = window2.read()
+        reply = values['-IN-']
+        match reply:
+            case '1':
+                layout_basic = [
+                [sg.Text(pidinput, key="-DYNAMIC-")],
+                [sg.Input(key='-IN-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+
+                while True:
+                    event, values = window2.read()
+                #window2['-DYNAMIC-'].update(pidinput)
+                    if event=='Send':
+                        ans = ['-IN-']
+                        window2['-REPLY-'].update(passengers(ans), visible=True)
+                    elif event == "-END-" or event == sg.WIN_CLOSED:
+                        window2.close()
+            case '2':
+                layout_basic = [
+                [sg.Text(pidinput)],
+                [sg.Input(key='-IN2-')],
+                [sg.Text(sidinput)],
+                [sg.Input(key='-IN-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                    if event=='Send':
+                        ans = ['-IN-']
+                        ans2 = ['-IN2-']
+                        window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
+                    if event == "-END-" or event == sg.WIN_CLOSED:
+                        window2.close()
+                #window['-REPLY-'].update(bagAllowance(pidinput(), sidinput()), visible=True)
+            case '3':
+                window2['-DYNAMIC-'].update(pidinput)
+                if event=='-SUBMIT-':
+                    ans = ['-IN-']
+                    window2['-IN-'].update("")
+                    window2['-DYNAMIC-'].update(sidinput)
+                    if event=='-SUBMIT-':
+                        ans2 = ['-IN-']
+                        window2['-REPLY-'].update(regulatoryRequirements(ans, ans2), visible=True)
+                #window['-REPLY-'].update(regulatoryRequirements(pidinput(), sidinput()), visible=True)
+            case '4':
+                window2['-DYNAMIC-'].update(pidinput)
+                if event=='-SUBMIT-':
+                    ans = ['-IN-']
+                    window2['-IN-'].update("")
+                    window2['-DYNAMIC-'].update(sidinput)
+                    if event=='-SUBMIT-':
+                        ans2 = ['-IN-']
+                        window2['-IN-'].update("")
+                        window2['-DYNAMIC-'].update(fidinput)
+                        if event=='-SUBMIT-':
+                            ans3 = ['-IN-']
+                            window2['-REPLY-'].update(seatMap(ans, ans2, ans3), visible=True)
+                #window['-REPLY-'].update(seatMap(pidinput(), sidinput(), fidinput()), visible=True)
+            case '5':
+                window2['-DYNAMIC-'].update(fidinput)
+                if event=='-SUBMIT-':
+                    ans = ['-IN-']
+                    window2['-REPLY-'].update(flightDetails(ans), visible=True)
+                #window['-REPLY-'].update(flightDetails(fidinput()), visible=True)
+            case _:
+                break
+        window2["-END-"].update(visible=True)
+        #[sg.Text("", key="-END-", visible=False)]
+        #input("Press any key to return to main table...")
+        #print("")
+        #reply = input("Input 1, 2, 3, 4 or 5 for one of the functions, otherwise automatically terminating: ")
+
+        
+
+        # def pidinput():
+        #return input("Please input your Passenger ID: ")
+#def sidinput():
+#    return input("Please input your Segment ID: ")
+#def fidinput():
+#    return input("Please input your Flight ID: ")
+
+    #ui.theme('GreenBlue')
+    #layout = [[ui.Text("Welcome to Cathay SwiftServe AI System made by Team_068: Cathay skyline"), ui.Text(size= (15,1),key = '-START-')],
+    #          [ui.Text("Today is :", date.today())]
+    #          [ui.Input(key='-IN-')],
+    #          [ui.Button('Show'), ui.Button('Exit')]]
+    #window = ui.Window('Cathay SwiftServe Ai', layout)
+
+    #while True:
+    #    event, values = window.read()
+    #    print(event, values)
+    #    if event == ui.WIN_CLOSED or event =='Exit':
+    #        break
+    #    if event == 'Show':
+    #        window['-OUTPUT-'].update(values['-IN-'])
+    
+    #window.close()
+
     print("Welcome to Cathay SwiftServe AI System made by Team_068: Cathay skyline")
     print("Today is :", date.today())
     print("Connecting to Cathay Network, please wait a second...")
@@ -136,11 +325,11 @@ def getRemainingDays(reserveDate):
 
 
 def button1(text):
-    return ui.B(text, pad=(2, 2), size=(12, 4), font=('Calibri', 24), button_color='black')
+    return sg.B(text, pad=(2, 2), size=(12, 4), font=('Calibri', 24), button_color='black')
 
 
 def button2(text):
-    return ui.B(text, pad=(1, 1), size=(50, 4), font=('Calibri', 18), button_color='black')
+    return sg.B(text, pad=(1, 1), size=(50, 4), font=('Calibri', 18), button_color='black')
 
 
 def mainui():
@@ -149,7 +338,7 @@ def mainui():
         [button1(i) for i in '123'],
         [button2(i) for i in ['Confirm']]
     ]
-    window = ui.Window('Cathay SwiftServe AI', layout)
+    window = sg.Window('Cathay SwiftServe AI', layout)
     while True:
         event = window.read()
         if event is None:
