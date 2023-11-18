@@ -1,12 +1,14 @@
+import json
 import requests
 import json
-import time
 from datetime import date
 import PySimpleGUI as sg
 
 API_key = '7vkjinjkwg6CCJY7qp32xMwWCzziNrwq'
 url = 'https://developers.cathaypacific.com/hackathon-apigw'
 
+
+# Example PID: 510892B000014EBB, SID: 5009A2B00005D613, FID: CX491
 
 # Search passengers based on passenger ID
 def passengers(PassengerID):
@@ -251,13 +253,17 @@ def main():
     while response.status_code == 200:
         print('*' * 50)
         print("Table of Funtions:")
+        print("0.Use Cathay Basic Information Chatbot.")
         print("1.Search passengers based on passenger ID.")
         print("2.Search passengers bag allowance based on passenger ID and segment ID.")
         print("3.Search passengers regulatory requirements based on passenger ID and segment ID.")
         print("4.Search passengers seatMap based on passenger ID and segment ID.")
         print("5.Search flight details based on flight number.")
-        reply = input("Input 1, 2, 3, 4 or 5 for one of the functions, otherwise automatically terminating: ")
+        print("6.Open pre-ordering System.")
+        reply = input("Input 0, 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")
         match reply:
+            case '0':
+                Cathay_GPT_02.main()
             case '1':
                 passengers(pidinput())
             case '2':
@@ -268,6 +274,8 @@ def main():
                 seatMap(pidinput(), sidinput(), fidinput())
             case '5':
                 flightDetails(fidinput())
+            case '6':
+                print(preorderSystem(pidinput()))
             case _:
                 break
         print("")
@@ -289,24 +297,27 @@ def fidinput():
 
 
 def preorderSystem(PassengerID):
+    flag = False
     passengerChoice = ""
     days = int(getRemainingDays(getDate(PassengerID)))
     foodList = getFoodList()
-    while days > 1:
+    while days <= 1:
+        flag = True
         passengerChoice = mainui()
         conf = input("Please press 'Y' to save your choice until the ordering period is closing: ")
         if conf == 'Y':
             print("Your choice have been saved successfully!")
         else:
             print("Your choice have not been saved!")
-    return passengerChoice
+    if flag: return passengerChoice
+    else: return "Sorry, the pre-ordering service closed."
 
 
 def getDate(PassengerID):
-    with open(passengers(PassengerID)) as d:
-        datadic = json.load(d)
-    datedFlightID = datadic['data']['segmentDeliveries']['collection']['ref'][-16:]
-    date0 = datadic['included']['segmentDeliveries'][datedFlightID]['flightSegment']['departure']['at'][:10]
+    str_data = passengers(PassengerID).decode("utf-8")
+    dict_data = json.loads(str_data)
+    datedFlightID = dict_data['data']['segmentDeliveries']['collection'][0]['ref'][-16:]
+    date0 = dict_data['included']['segmentDeliveries'][datedFlightID]['flightSegment']['departure']['at'][:10]
     return date0
 
 
@@ -320,8 +331,10 @@ def getFoodList():
 
 
 def getRemainingDays(reserveDate):
-    return (date(reserveDate[:4], reserveDate[5:7], reserveDate[-2:]) - date(date.today()[:4], date.today()[5:7],
-                                                                             date.today()[-2:])).days
+    return (date(int(reserveDate[:4]), int(reserveDate[5:7]), int(reserveDate[-2:])) - date(int(str(date.today())[:4]),
+                                                                                            int(str(date.today())[5:7]),
+                                                                                            int(str(date.today())[
+                                                                                                -2:]))).days
 
 
 def button1(text):
@@ -336,7 +349,7 @@ def mainui():
     x = -1
     layout = [
         [button1(i) for i in '123'],
-        [button2(i) for i in ['Confirm']]
+        [button2(i) for i in ['Save']]
     ]
     window = sg.Window('Cathay SwiftServe AI', layout)
     while True:
@@ -349,7 +362,7 @@ def mainui():
             x = 2
         if event == '3':
             x = 0
-        if event == 'Confirm':
+        if event == 'Save':
             break
     return x
 
