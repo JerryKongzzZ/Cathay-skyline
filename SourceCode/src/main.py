@@ -7,6 +7,8 @@ API_key = '7vkjinjkwg6CCJY7qp32xMwWCzziNrwq'
 url = 'https://developers.cathaypacific.com/hackathon-apigw'
 
 
+# Example PID: 510892B000014EBB, SID: 5009A2B00005D613, FID: CX491
+
 # Search passengers based on passenger ID
 def passengers(PassengerID):
     headers = {'apiKey': API_key, 'accept': 'application/json'}
