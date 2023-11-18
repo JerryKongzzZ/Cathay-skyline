@@ -2,7 +2,7 @@ import http.client
 import requests
 import json
 from datetime import date
-import PySimpleGUI as ui
+import PySimpleGUI as sg
 
 API_key = '7vkjinjkwg6CCJY7qp32xMwWCzziNrwq'
 url = 'https://developers.cathaypacific.com/hackathon-apigw'
@@ -51,6 +51,46 @@ def flightDetails(FlightID):
 
 
 def main():
+
+def connect_function():
+    # Replace this with your actual connection logic
+    # For example, you might be making an HTTP request and checking the response status code
+    # Simulating a successful connection for demonstration purposes
+    return True
+
+def main():
+    layout = [
+        [sg.Text("Click the button to start the connection")],
+        [sg.Button("Connect", key="-CONNECT-")],
+        [sg.Text("", key="-STATUS-", size=(20, 1), visible=False)]
+    ]
+
+    window = sg.Window("Connection Example", layout, finalize=True)
+
+    while True:
+        event, values = window.read()
+
+        if event == sg.WINDOW_CLOSED:
+            break
+        elif event == "-CONNECT-":
+            window["-STATUS-"].update("Connecting...", visible=True)
+            window.refresh()
+
+            # Call your connect_function here
+            connected = connect_function()
+
+            # Update the status text based on the connection result
+            if connected:
+                window["-STATUS-"].update("Connected successfully!")
+            else:
+                window["-STATUS-"].update("Connection failed!")
+
+            window.refresh()
+
+    window.close()
+
+if __name__ == "__main__":
+    main()
     print("Welcome to Cathay SwiftServe AI System made by Team_068: Cathay skyline")
     print("Today is :", date.today())
     print("Connecting to Cathay Network, please wait a second...")
