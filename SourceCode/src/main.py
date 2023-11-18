@@ -1,5 +1,5 @@
-import requests
 import json
+import requests
 from datetime import date
 import PySimpleGUI as ui
 
@@ -69,7 +69,8 @@ def main():
         print("3.Search passengers regulatory requirements based on passenger ID and segment ID.")
         print("4.Search passengers seatMap based on passenger ID and segment ID.")
         print("5.Search flight details based on flight number.")
-        reply = input("Input 1, 2, 3, 4 or 5 for one of the functions, otherwise automatically terminating: ")
+        print("6.Open pre-ordering System.")
+        reply = input("Input 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")
         match reply:
             case '1':
                 passengers(pidinput())
@@ -81,6 +82,8 @@ def main():
                 seatMap(pidinput(), sidinput(), fidinput())
             case '5':
                 flightDetails(fidinput())
+            case '6':
+                print(preorderSystem(pidinput()))
             case _:
                 break
         print("")
@@ -105,7 +108,7 @@ def preorderSystem(PassengerID):
     passengerChoice = ""
     days = int(getRemainingDays(getDate(PassengerID)))
     foodList = getFoodList()
-    while days > 1:
+    while days <= 1:
         passengerChoice = mainui()
         conf = input("Please press 'Y' to save your choice until the ordering period is closing: ")
         if conf == 'Y':
@@ -116,10 +119,10 @@ def preorderSystem(PassengerID):
 
 
 def getDate(PassengerID):
-    with open(passengers(PassengerID)) as d:
-        datadic = json.load(d)
-    datedFlightID = datadic['data']['segmentDeliveries']['collection']['ref'][-16:]
-    date0 = datadic['included']['segmentDeliveries'][datedFlightID]['flightSegment']['departure']['at'][:10]
+    str_data = passengers(PassengerID).decode("utf-8")
+    dict_data = json.loads(str_data)
+    datedFlightID = dict_data['data']['segmentDeliveries']['collection'][0]['ref'][-16:]
+    date0 = dict_data['included']['segmentDeliveries'][datedFlightID]['flightSegment']['departure']['at'][:10]
     return date0
 
 
@@ -133,8 +136,10 @@ def getFoodList():
 
 
 def getRemainingDays(reserveDate):
-    return (date(reserveDate[:4], reserveDate[5:7], reserveDate[-2:]) - date(date.today()[:4], date.today()[5:7],
-                                                                             date.today()[-2:])).days
+    return (date(int(reserveDate[:4]), int(reserveDate[5:7]), int(reserveDate[-2:])) - date(int(str(date.today())[:4]),
+                                                                                            int(str(date.today())[5:7]),
+                                                                                            int(str(date.today())[
+                                                                                                -2:]))).days
 
 
 def button1(text):
@@ -149,7 +154,7 @@ def mainui():
     x = -1
     layout = [
         [button1(i) for i in '123'],
-        [button2(i) for i in ['Confirm']]
+        [button2(i) for i in ['Save']]
     ]
     window = ui.Window('Cathay SwiftServe AI', layout)
     while True:
@@ -162,7 +167,7 @@ def mainui():
             x = 2
         if event == '3':
             x = 0
-        if event == 'Confirm':
+        if event == 'Save':
             break
     return x
 
