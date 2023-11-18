@@ -1,4 +1,3 @@
-import http.client
 import requests
 import json
 from datetime import date
@@ -13,7 +12,7 @@ def passengers(PassengerID):
     headers = {'apiKey': API_key, 'accept': 'application/json'}
     res = requests.get(url + "/airport/customers/" + PassengerID + "/details", headers=headers)
     data = res.content
-    print(data)
+    return data
 
 
 # Search passengers bag allowance based on passenger ID and segment ID
@@ -21,7 +20,7 @@ def bagAllowance(PassengerID, SegmentID):
     headers = {'apiKey': API_key, 'accept': 'application/json'}
     res = requests.get(url + "/airport/customers/" + PassengerID + SegmentID + "/bagallowance", headers=headers)
     data = res.content
-    print(data)
+    return data
 
 
 # Search passengers regulatory requirements based on passenger ID and segment ID
@@ -30,7 +29,7 @@ def regulatoryRequirements(PassengerID, SegmentID):
     res = requests.get(url + "/airport/customers/" + PassengerID + SegmentID + "/regulatoryrequirements",
                        headers=headers)
     data = res.content
-    print(data)
+    return data
 
 
 # Search passengers seatMap based on passenger ID and segment ID
@@ -39,7 +38,7 @@ def seatMap(PassengerID, SegmentID, FlightID):
     res = requests.get(url + "/airport/flights/" + PassengerID + SegmentID + "/seatmaps?fid=" + FlightID,
                        headers=headers)
     data = res.content
-    print(data)
+    return data
 
 
 # Search flight details based on flight number
@@ -47,7 +46,7 @@ def flightDetails(FlightID):
     headers = {'apiKey': API_key, 'accept': 'application/json'}
     res = requests.get(url + "/airport/flights?fid=" + FlightID, headers=headers)
     data = res.content
-    print(data)
+    return data
 
 
 def main():
@@ -115,10 +114,7 @@ def preorderSystem(PassengerID):
 
 
 def getDate(PassengerID):
-    headers = {'apiKey': API_key, 'accept': 'application/json'}
-    res = requests.get(url + "/airport/customers/" + PassengerID + "/details", headers=headers)
-    data = res.content
-    with open(data) as d:
+    with open(passengers(PassengerID)) as d:
         datadic = json.load(d)
     datedFlightID = datadic['data']['segmentDeliveries']['collection']['ref'][-16:]
     date0 = datadic['included']['segmentDeliveries'][datedFlightID]['flightSegment']['departure']['at'][:10]
@@ -148,15 +144,14 @@ def button2(text):
 
 
 def mainui():
+    x = -1
     layout = [
         [button1(i) for i in '123'],
         [button2(i) for i in ['Confirm']]
     ]
     window = ui.Window('Cathay SwiftServe AI', layout)
-    x = -1
     while True:
-        event, values = window.read()
-        print(event)
+        event = window.read()
         if event is None:
             break
         if event == '1':
