@@ -1,5 +1,6 @@
 import json
 import requests
+import Cathay_GPT_02
 from datetime import date
 import PySimpleGUI as ui
 
@@ -64,14 +65,17 @@ def main():
     while response.status_code == 200:
         print('*' * 50)
         print("Table of Funtions:")
+        print("0.Use Cathay Basic Information Chatbot.")
         print("1.Search passengers based on passenger ID.")
         print("2.Search passengers bag allowance based on passenger ID and segment ID.")
         print("3.Search passengers regulatory requirements based on passenger ID and segment ID.")
         print("4.Search passengers seatMap based on passenger ID and segment ID.")
         print("5.Search flight details based on flight number.")
         print("6.Open pre-ordering System.")
-        reply = input("Input 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")
+        reply = input("Input 0, 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")
         match reply:
+            case '0':
+                Cathay_GPT_02.main()
             case '1':
                 passengers(pidinput())
             case '2':
@@ -105,17 +109,20 @@ def fidinput():
 
 
 def preorderSystem(PassengerID):
+    flag = False
     passengerChoice = ""
     days = int(getRemainingDays(getDate(PassengerID)))
     foodList = getFoodList()
     while days <= 1:
+        flag = True
         passengerChoice = mainui()
         conf = input("Please press 'Y' to save your choice until the ordering period is closing: ")
         if conf == 'Y':
             print("Your choice have been saved successfully!")
         else:
             print("Your choice have not been saved!")
-    return passengerChoice
+    if flag: return passengerChoice
+    else: return "Sorry, the pre-ordering service closed."
 
 
 def getDate(PassengerID):
