@@ -31,7 +31,7 @@ def main():
             input(),
             **parameters
         )
-        if response.text == "Goodbye!" or response.text == "Bye!" or response.text == "bye" or response.text == "goodbye":
+        if response.text == "Goodbye!":
             break
 
 main()
