@@ -1,5 +1,5 @@
-import vertexai
-from vertexai.language_models import TextGenerationModel, ChatModel, InputOutputTextPair
+#import vertexai
+#from vertexai.language_models import TextGenerationModel, ChatModel, InputOutputTextPair
 
 
 def main():

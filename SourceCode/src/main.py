@@ -1,8 +1,9 @@
 import json
 import requests
-import json
+import Cathay_GPT_2
 from datetime import date
 import PySimpleGUI as sg
+import time
 
 API_key = '7vkjinjkwg6CCJY7qp32xMwWCzziNrwq'
 url = 'https://developers.cathaypacific.com/hackathon-apigw'
@@ -152,17 +153,17 @@ def main():
                 while True:
                     event, values = window2.read()
                 #window2['-DYNAMIC-'].update(pidinput)
-                    if event=='Send':
+                    if event =='Send':
                         ans = ['-IN-']
                         window2['-REPLY-'].update(passengers(ans), visible=True)
-                    elif event == "-END-" or event == sg.WIN_CLOSED:
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
                         window2.close()
             case '2':
                 layout_basic = [
                 [sg.Text(pidinput)],
-                [sg.Input(key='-IN2-')],
-                [sg.Text(sidinput)],
                 [sg.Input(key='-IN-')],
+                [sg.Text(sidinput)],
+                [sg.Input(key='-IN2-')],
                 [sg.Button("Send")],
                 [sg.Text("", key="-REPLY-", visible=False)],
                 [sg.Button("Back to Main", key="-END-", visible=True)]
@@ -174,39 +175,73 @@ def main():
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
                         window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
-                    if event == "-END-" or event == sg.WIN_CLOSED:
+                    if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
                         window2.close()
                 #window['-REPLY-'].update(bagAllowance(pidinput(), sidinput()), visible=True)
             case '3':
-                window2['-DYNAMIC-'].update(pidinput)
-                if event=='-SUBMIT-':
-                    ans = ['-IN-']
-                    window2['-IN-'].update("")
-                    window2['-DYNAMIC-'].update(sidinput)
-                    if event=='-SUBMIT-':
-                        ans2 = ['-IN-']
-                        window2['-REPLY-'].update(regulatoryRequirements(ans, ans2), visible=True)
+                layout_basic = [
+                [sg.Text(pidinput)],
+                [sg.Input(key='-IN-')],
+                [sg.Text(sidinput)],
+                [sg.Input(key='-IN2-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                    if event=='Send':
+                        ans = ['-IN-']
+                        ans2 = ['-IN2-']
+                        window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
+                    if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
+                        window2.close()
                 #window['-REPLY-'].update(regulatoryRequirements(pidinput(), sidinput()), visible=True)
             case '4':
-                window2['-DYNAMIC-'].update(pidinput)
-                if event=='-SUBMIT-':
-                    ans = ['-IN-']
-                    window2['-IN-'].update("")
-                    window2['-DYNAMIC-'].update(sidinput)
-                    if event=='-SUBMIT-':
-                        ans2 = ['-IN-']
-                        window2['-IN-'].update("")
-                        window2['-DYNAMIC-'].update(fidinput)
-                        if event=='-SUBMIT-':
-                            ans3 = ['-IN-']
-                            window2['-REPLY-'].update(seatMap(ans, ans2, ans3), visible=True)
+                layout_basic = [
+                [sg.Text(pidinput)],
+                [sg.Input(key='-IN-')],
+                [sg.Text(sidinput)],
+                [sg.Input(key='-IN2-')],
+                [sg.Text(fidinput)],
+                [sg.Input(key='-IN3-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                    if event=='Send':
+                        ans = ['-IN-']
+                        ans2 = ['-IN2-']
+                        ans3 = ['-IN3-']
+                        window2['-REPLY-'].update(bagAllowance(ans, ans2, ans3), visible=True)
+                    if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
+                        window2.close()
                 #window['-REPLY-'].update(seatMap(pidinput(), sidinput(), fidinput()), visible=True)
             case '5':
-                window2['-DYNAMIC-'].update(fidinput)
-                if event=='-SUBMIT-':
-                    ans = ['-IN-']
-                    window2['-REPLY-'].update(flightDetails(ans), visible=True)
+                layout_basic = [
+                [sg.Text(fidinput, key="-DYNAMIC-")],
+                [sg.Input(key='-IN-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+
+                while True:
+                    event, values = window2.read()
+                #window2['-DYNAMIC-'].update(pidinput)
+                    if event =='Send':
+                        ans = ['-IN-']
+                        window2['-REPLY-'].update(passengers(ans), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
+                        window2.close()
                 #window['-REPLY-'].update(flightDetails(fidinput()), visible=True)
+            case '6':
+                print(preorderSystem(pidinput()))
             case _:
                 break
         window2["-END-"].update(visible=True)
@@ -263,7 +298,7 @@ def main():
         reply = input("Input 0, 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")
         match reply:
             case '0':
-                Cathay_GPT_02.main()
+                Cathay_GPT_2.main()
             case '1':
                 passengers(pidinput())
             case '2':
