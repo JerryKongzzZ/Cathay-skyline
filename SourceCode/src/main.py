@@ -26,7 +26,7 @@ def bagAllowance(PassengerID, SegmentID):
     data = res.content
     return data
 
-
+             
 # Search passengers regulatory requirements based on passenger ID and segment ID
 def regulatoryRequirements(PassengerID, SegmentID):
     headers = {'apiKey': API_key, 'accept': 'application/json'}
@@ -99,17 +99,18 @@ def main():
                 window = sg.Window("Failed", layout_connection, finalize=True)
                 time.sleep(5)
                 window.close()
+                break
             window.refresh()
     window.close()
 
     #connected = check_connection(API_key)
-    #while connected == 200:
+    #while connected == 200:e
     styling = '*' * 50
     styling_str = str(styling) 
     layout_main = [
         [sg.Text(styling_str)],
-        [sg.Text("Table of Functions: \n 1.Search passengers based on passenger ID. \n 2.Search passengers bag allowance based on passenger ID and segment ID. \n 3.Search passengers regulatory requirements based on passenger ID and segment ID. \n 4.Search passengers seatMap based on passenger ID and segment ID. \n 5.Search flight details based on flight number. \n 6. Pre-order food choices for your upcoming flight")],
-        [sg.Text("Input 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")],
+        [sg.Text("Table of Functions: \n 0.Use Cathay Basic Information Chatbot.\n 1.Search passengers based on passenger ID. \n 2.Search passengers bag allowance based on passenger ID and segment ID. \n 3.Search passengers regulatory requirements based on passenger ID and segment ID. \n 4.Search passengers seatMap based on passenger ID and segment ID. \n 5.Search flight details based on flight number. \n 6.Pre-order food choices for your upcoming flight")],
+        [sg.Text("Input 0, 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")],
         [sg.Input(key='-IN-')],
         [sg.Button('Enter'), sg.Button('Exit')],
         #[sg.Text("",key='-CON-', auto_size_text=True, visible=False)]
@@ -121,7 +122,7 @@ def main():
     while True: 
         event, values = window.read()
         if event ==sg.WIN_CLOSED or event == 'Exit':
-            #window['-CON-'].update("The program has terminated!", auto_size_text=True, visible=True)
+            #window['-CON-'].update("The program has terminated!", auto_size_text=True, visible=Tru)
             window.close()
             #window = sg.Window("Success", layout_main, finalize=True)
             #time.sleep(3)
@@ -138,8 +139,13 @@ def main():
         #window2 = sg.Window("Reply", layout_basic, finalize=True)
         #while True:
         #    event, values = window2.read()
-        reply = values['-IN-']
+        try:
+            reply = values['-IN-']
+        except:
+            reply = -1
         match reply:
+            case '0':
+                Cathay_GPT_2.main()
             case '1':
                 layout_basic = [
                 [sg.Text(pidinput, key="-DYNAMIC-")],
@@ -175,7 +181,7 @@ def main():
                     if event=='Send':
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
-                        window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
+                        window2['-REPLY-'].update(bagAllowance(''.join(ans), ''.join(ans2)), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
                         break
@@ -196,7 +202,7 @@ def main():
                     if event=='Send':
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
-                        window2['-REPLY-'].update(regulatoryRequirements(ans, ans2), visible=True)
+                        window2['-REPLY-'].update(regulatoryRequirements(''.join(ans), ''.join(ans2)), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
                         window2.close()
                         break
@@ -220,7 +226,7 @@ def main():
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
                         ans3 = ['-IN3-']
-                        window2['-REPLY-'].update(seatMap(ans, ans2, ans3), visible=True)
+                        window2['-REPLY-'].update(seatMap(''.join(ans), ''.join(ans2), ''.join(ans3)), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
                         break
@@ -240,7 +246,7 @@ def main():
                 #window2['-DYNAMIC-'].update(pidinput)
                     if event =='Send':
                         ans = ['-IN-']
-                        window2['-REPLY-'].update(flightDetails(ans), visible=True)
+                        window2['-REPLY-'].update(flightDetails(''.join(ans)), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
                         break
@@ -260,11 +266,12 @@ def main():
                 #window2['-DYNAMIC-'].update(pidinput)
                     if event =='Send':
                         ans = ['-IN-'] ##
-                        window2['-REPLY-'].update(preorderSystem(ans), visible=True)
+                        window2['-REPLY-'].update(preorderSystem(''.join(ans)), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
                         break
-
+            case '-1':
+                print("Error!")
             case '_':
                 break
         window2["-END-"].update(visible=True)

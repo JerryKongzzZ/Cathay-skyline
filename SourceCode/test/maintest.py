@@ -1,1 +1,3 @@
-#just empty test file
+import main
+
+main()
