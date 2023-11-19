@@ -255,7 +255,7 @@ def main():
                     event, values = window2.read()
                 #window2['-DYNAMIC-'].update(pidinput)
                     if event =='Send':
-                        ans = ['-IN-']
+                        ans = ['-IN-'] ##
                         window2['-REPLY-'].update(preorderSystem(ans), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
                         window2.close()
@@ -352,9 +352,9 @@ def fidinput():
 def preorderSystem(PassengerID):
     flag = False
     passengerChoice = ""
-    days = int(getRemainingDays(getDate(PassengerID)))
+    days = int(getRemainingDays(getDate(PassengerID))) ##
     foodList = getFoodList()
-    while days <= 1:
+    while days > 1:
         flag = True
         passengerChoice = mainui()
         conf = input("Please press 'Y' to save your choice until the ordering period is closing: ")
