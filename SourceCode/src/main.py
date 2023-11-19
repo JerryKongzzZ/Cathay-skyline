@@ -26,7 +26,7 @@ def bagAllowance(PassengerID, SegmentID):
     data = res.content
     return data
 
-
+             
 # Search passengers regulatory requirements based on passenger ID and segment ID
 def regulatoryRequirements(PassengerID, SegmentID):
     headers = {'apiKey': API_key, 'accept': 'application/json'}
@@ -99,17 +99,18 @@ def main():
                 window = sg.Window("Failed", layout_connection, finalize=True)
                 time.sleep(5)
                 window.close()
+                break
             window.refresh()
     window.close()
 
     #connected = check_connection(API_key)
-    #while connected == 200:
+    #while connected == 200:e
     styling = '*' * 50
     styling_str = str(styling) 
     layout_main = [
         [sg.Text(styling_str)],
-        [sg.Text("Table of Functions: \n 1.Search passengers based on passenger ID. \n 2.Search passengers bag allowance based on passenger ID and segment ID. \n 3.Search passengers regulatory requirements based on passenger ID and segment ID. \n 4.Search passengers seatMap based on passenger ID and segment ID. \n 5.Search flight details based on flight number. \n 6. Pre-order food choices for your upcoming flight")],
-        [sg.Text("Input 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")],
+        [sg.Text("Table of Functions: \n 0.Use Cathay Basic Information Chatbot.\n 1.Search passengers based on passenger ID. \n 2.Search passengers bag allowance based on passenger ID and segment ID. \n 3.Search passengers regulatory requirements based on passenger ID and segment ID. \n 4.Search passengers seatMap based on passenger ID and segment ID. \n 5.Search flight details based on flight number. \n 6.Pre-order food choices for your upcoming flight")],
+        [sg.Text("Input 0, 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")],
         [sg.Input(key='-IN-')],
         [sg.Button('Enter'), sg.Button('Exit')],
         #[sg.Text("",key='-CON-', auto_size_text=True, visible=False)]
@@ -121,7 +122,7 @@ def main():
     while True: 
         event, values = window.read()
         if event ==sg.WIN_CLOSED or event == 'Exit':
-            #window['-CON-'].update("The program has terminated!", auto_size_text=True, visible=True)
+            #window['-CON-'].update("The program has terminated!", auto_size_text=True, visible=Tru)
             window.close()
             #window = sg.Window("Success", layout_main, finalize=True)
             #time.sleep(3)
@@ -138,136 +139,135 @@ def main():
         #window2 = sg.Window("Reply", layout_basic, finalize=True)
         #while True:
         #    event, values = window2.read()
-        if values is not None:
-            reply = values['-IN-'] ##
-            match reply:
-                case '1':
-                    layout_basic = [
-                    [sg.Text(pidinput, key="-DYNAMIC-")],
-                    [sg.Input(key='-IN-')],
-                    [sg.Button("Send")],
-                    [sg.Text("", key="-REPLY-", visible=False)],
-                    [sg.Button("Back to Main", key="-END-", visible=True)]
-                    ]
-                    window2 = sg.Window("Reply", layout_basic, finalize=True)
+        reply = values['-IN-']
+        match reply:
+            case '1':
+                layout_basic = [
+                [sg.Text(pidinput, key="-DYNAMIC-")],
+                [sg.Input(key='-IN-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
 
-                    while True:
-                        event, values = window2.read()
-                    #window2['-DYNAMIC-'].update(pidinput)
-                        if event =='Send':
-                            ans = ['-IN-']
-                            window2['-REPLY-'].update(passengers(''.join(ans)), visible=True)
-                        if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
-                            window2.close()
-                            break
-                case '2':
-                    layout_basic = [
-                    [sg.Text(pidinput)],
-                    [sg.Input(key='-IN-')],
-                    [sg.Text(sidinput)],
-                    [sg.Input(key='-IN2-')],
-                    [sg.Button("Send")],
-                    [sg.Text("", key="-REPLY-", visible=False)],
-                    [sg.Button("Back to Main", key="-END-", visible=True)]
-                    ]
-                    window2 = sg.Window("Reply", layout_basic, finalize=True)
-                    while True:
-                        event, values = window2.read()
-                        if event=='Send':
-                            ans = ['-IN-']
-                            ans2 = ['-IN2-']
-                            window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
-                        if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
-                            window2.close()
-                            break
-                    #window['-REPLY-'].update(bagAllowance(pidinput(), sidinput()), visible=True)
-                case '3':
-                    layout_basic = [
-                    [sg.Text(pidinput)],
-                    [sg.Input(key='-IN-')],
-                    [sg.Text(sidinput)],
-                    [sg.Input(key='-IN2-')],
-                    [sg.Button("Send")],
-                    [sg.Text("", key="-REPLY-", visible=False)],
-                    [sg.Button("Back to Main", key="-END-", visible=True)]
-                    ]
-                    window2 = sg.Window("Reply", layout_basic, finalize=True)
-                    while True:
-                        event, values = window2.read()
-                        if event=='Send':
-                            ans = ['-IN-']
-                            ans2 = ['-IN2-']
-                            window2['-REPLY-'].update(regulatoryRequirements(ans, ans2), visible=True)
-                        if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
-                            window2.close()
-                            break
-                    #window['-REPLY-'].update(regulatoryRequirements(pidinput(), sidinput()), visible=True)
-                case '4':
-                    layout_basic = [
-                    [sg.Text(pidinput)],
-                    [sg.Input(key='-IN-')],
-                    [sg.Text(sidinput)],
-                    [sg.Input(key='-IN2-')],
-                    [sg.Text(fidinput)],
-                    [sg.Input(key='-IN3-')],
-                    [sg.Button("Send")],
-                    [sg.Text("", key="-REPLY-", visible=False)],
-                    [sg.Button("Back to Main", key="-END-", visible=True)]
-                    ]
-                    window2 = sg.Window("Reply", layout_basic, finalize=True)
-                    while True:
-                        event, values = window2.read()
-                        if event=='Send':
-                            ans = ['-IN-']
-                            ans2 = ['-IN2-']
-                            ans3 = ['-IN3-']
-                            window2['-REPLY-'].update(seatMap(ans, ans2, ans3), visible=True)
-                        if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
-                            window2.close()
-                            break
-                    #window['-REPLY-'].update(seatMap(pidinput(), sidinput(), fidinput()), visible=True)
-                case '5':
-                    layout_basic = [
-                    [sg.Text(fidinput, key="-DYNAMIC-")],
-                    [sg.Input(key='-IN-')],
-                    [sg.Button("Send")],
-                    [sg.Text("", key="-REPLY-", visible=False)],
-                    [sg.Button("Back to Main", key="-END-", visible=True)]
-                    ]
-                    window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                #window2['-DYNAMIC-'].update(pidinput)
+                    if event =='Send':
+                        ans = ['-IN-']
+                        window2['-REPLY-'].update(passengers(''.join(ans)), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
+                        window2.close()
+                        break
+            case '2':
+                layout_basic = [
+                [sg.Text(pidinput)],
+                [sg.Input(key='-IN-')],
+                [sg.Text(sidinput)],
+                [sg.Input(key='-IN2-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                    if event=='Send':
+                        ans = ['-IN-']
+                        ans2 = ['-IN2-']
+                        window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
+                        window2.close()
+                        break
+                #window['-REPLY-'].update(bagAllowance(pidinput(), sidinput()), visible=True)
+            case '3':
+                layout_basic = [
+                [sg.Text(pidinput)],
+                [sg.Input(key='-IN-')],
+                [sg.Text(sidinput)],
+                [sg.Input(key='-IN2-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                    if event=='Send':
+                        ans = ['-IN-']
+                        ans2 = ['-IN2-']
+                        window2['-REPLY-'].update(regulatoryRequirements(ans, ans2), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
+                        window2.close()
+                        break
+                #window['-REPLY-'].update(regulatoryRequirements(pidinput(), sidinput()), visible=True)
+            case '4':
+                layout_basic = [
+                [sg.Text(pidinput)],
+                [sg.Input(key='-IN-')],
+                [sg.Text(sidinput)],
+                [sg.Input(key='-IN2-')],
+                [sg.Text(fidinput)],
+                [sg.Input(key='-IN3-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                    if event=='Send':
+                        ans = ['-IN-']
+                        ans2 = ['-IN2-']
+                        ans3 = ['-IN3-']
+                        window2['-REPLY-'].update(seatMap(ans, ans2, ans3), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
+                        window2.close()
+                        break
+                #window['-REPLY-'].update(seatMap(pidinput(), sidinput(), fidinput()), visible=True)
+            case '5':
+                layout_basic = [
+                [sg.Text(fidinput, key="-DYNAMIC-")],
+                [sg.Input(key='-IN-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
 
-                    while True:
-                        event, values = window2.read()
-                    #window2['-DYNAMIC-'].update(pidinput)
-                        if event =='Send':
-                            ans = ['-IN-']
-                            window2['-REPLY-'].update(flightDetails(ans), visible=True)
-                        if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
-                            window2.close()
-                            break
-                    #window['-REPLY-'].update(flightDetails(fidinput()), visible=True)
-                case '6':
-                    layout_basic = [
-                    [sg.Text(pidinput, key="-DYNAMIC-")],
-                    [sg.Input(key='-IN-')],
-                    [sg.Button("Send")],
-                    [sg.Text("", key="-REPLY-", visible=False)],
-                    [sg.Button("Back to Main", key="-END-", visible=True)]
-                    ]
-                    window2 = sg.Window("Reply", layout_basic, finalize=True)
+                while True:
+                    event, values = window2.read()
+                #window2['-DYNAMIC-'].update(pidinput)
+                    if event =='Send':
+                        ans = ['-IN-']
+                        window2['-REPLY-'].update(flightDetails(ans), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
+                        window2.close()
+                        break
+                #window['-REPLY-'].update(flightDetails(fidinput()), visible=True)
+            case '6':
+                layout_basic = [
+                [sg.Text(pidinput, key="-DYNAMIC-")],
+                [sg.Input(key='-IN-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
 
-                    while True:
-                        event, values = window2.read()
-                    #window2['-DYNAMIC-'].update(pidinput)
-                        if event =='Send':
-                            ans = ['-IN-'] ##
-                            window2['-REPLY-'].update(preorderSystem(ans), visible=True)
-                        if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
-                            window2.close()
-                            break
+                while True:
+                    event, values = window2.read()
+                #window2['-DYNAMIC-'].update(pidinput)
+                    if event =='Send':
+                        ans = ['-IN-'] ##
+                        window2['-REPLY-'].update(preorderSystem(ans), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
+                        window2.close()
+                        break
 
-                case '_':
-                    break
+            case '_':
+                break
         window2["-END-"].update(visible=True)
         #[sg.Text("", key="-END-", visible=False)]
         #input("Press any key to return to main table...")
