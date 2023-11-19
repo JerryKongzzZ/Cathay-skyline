@@ -361,7 +361,7 @@ def preorderSystem(PassengerID):
     foodList = getFoodList()
     while days > 1:
         flag = True
-        passengerChoice = mainui()
+        passengerChoice = mainui(PassengerID)
         conf = input("Please press 'Y' to save your choice until the ordering period is closing: ")
         if conf == 'Y':
             print("Your choice have been saved successfully!")
@@ -403,7 +403,7 @@ def button2(text):
     return sg.B(text, pad=(1, 1), size=(50, 4), font=('Calibri', 18), button_color='black')
 
 
-def mainui():
+def mainui(PassengerID):
     x = -1
     layout = [
         [button1(i) for i in '123'],
@@ -416,10 +416,46 @@ def mainui():
             break
         if event == '1':
             x = 1
+            layout_food =[
+                [sg.Text("nutrient values are.....")],
+                [sg.Text("allegens are....")],
+                [sg.Button("confirm my order", key="-YES-"), sg.Button("back to food choices", key="-STOP-")]
+            ]
+            window2 = sg.Window('more details', layout_food, finalize=True)
+            while True:
+                event, value = window2.read()
+                if event == "-STOP-" or event == sg.WINDOW_CLOSED and window2 is not None:    
+                    window2.close()
+                elif event == "-YES-":
+                    print(x + PassengerID)
         if event == '2':
             x = 2
+            layout_food =[
+                [sg.Text("nutrient values are.....")],
+                [sg.Text("allegens are....")],
+                [sg.Button("confirm my order", key="-YES-"), sg.Button("back to food choices", key="-STOP-")]
+            ]
+            window2 = sg.Window('more details', layout_food, finalize=True)
+            while True:
+                event, value = window2.read()
+                if event == "-STOP-" or event == sg.WINDOW_CLOSED and window2 is not None:    
+                        window2.close()
+                elif event == "-YES-":
+                    print(x + PassengerID)
         if event == '3':
             x = 0
+            layout_food =[
+                [sg.Text("You have opted out of catering service")],
+                [sg.Text("please confirm your choice")],
+                [sg.Button("confirm", key="-YES-"), sg.Button("back to food choices", key="-STOP-")]
+            ]
+            window2 = sg.Window('more details', layout_food, finalize=True)
+            while True:
+                event, value = window2.read()
+                if event == "-STOP-" or event == sg.WINDOW_CLOSED and window2 is not None:    
+                        window2.close()
+                elif event == "-YES-":
+                    print(x + PassengerID)
         if event == 'Save':
             break
     return x
