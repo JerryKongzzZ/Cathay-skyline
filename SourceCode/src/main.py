@@ -194,7 +194,7 @@ def main():
                     if event=='Send':
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
-                        window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
+                        window2['-REPLY-'].update(regulatoryRequirements(ans, ans2), visible=True)
                     if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
                         window2.close()
                 #window['-REPLY-'].update(regulatoryRequirements(pidinput(), sidinput()), visible=True)
@@ -217,7 +217,7 @@ def main():
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
                         ans3 = ['-IN3-']
-                        window2['-REPLY-'].update(bagAllowance(ans, ans2, ans3), visible=True)
+                        window2['-REPLY-'].update(seatMap(ans, ans2, ans3), visible=True)
                     if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
                         window2.close()
                 #window['-REPLY-'].update(seatMap(pidinput(), sidinput(), fidinput()), visible=True)
@@ -236,12 +236,28 @@ def main():
                 #window2['-DYNAMIC-'].update(pidinput)
                     if event =='Send':
                         ans = ['-IN-']
-                        window2['-REPLY-'].update(passengers(ans), visible=True)
+                        window2['-REPLY-'].update(flightDetails(ans), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
                         window2.close()
                 #window['-REPLY-'].update(flightDetails(fidinput()), visible=True)
             case '6':
-                print(preorderSystem(pidinput()))
+                layout_basic = [
+                [sg.Text(pidinput, key="-DYNAMIC-")],
+                [sg.Input(key='-IN-')],
+                [sg.Button("Send")],
+                [sg.Text("", key="-REPLY-", visible=False)],
+                [sg.Button("Back to Main", key="-END-", visible=True)]
+                ]
+                window2 = sg.Window("Reply", layout_basic, finalize=True)
+
+                while True:
+                    event, values = window2.read()
+                #window2['-DYNAMIC-'].update(pidinput)
+                    if event =='Send':
+                        ans = ['-IN-']
+                        window2['-REPLY-'].update(preorderSystem(ans), visible=True)
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
+                        window2.close()
             case _:
                 break
         window2["-END-"].update(visible=True)
