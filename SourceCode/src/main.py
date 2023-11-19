@@ -124,6 +124,7 @@ def main():
         if event ==sg.WIN_CLOSED or event == 'Exit':
             #window['-CON-'].update("The program has terminated!", auto_size_text=True, visible=Tru)
             window.close()
+            break
             #window = sg.Window("Success", layout_main, finalize=True)
             #time.sleep(3)
             #window.close()
@@ -139,7 +140,6 @@ def main():
         #window2 = sg.Window("Reply", layout_basic, finalize=True)
         #while True:
         #    event, values = window2.read()
-<<<<<<< HEAD
         if values is not None:
             reply = values['-IN-'] ##
             match reply:
@@ -270,11 +270,6 @@ def main():
 
                 case '_':
                     break
-=======
-        try:
-            reply = values['-IN-']
-        except:
-            reply = -1
         match reply:
             case '0':
                 Cathay_GPT_2.main()
@@ -402,11 +397,8 @@ def main():
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
                         break
-            case '-1':
-                print("Error!")
             case '_':
                 break
->>>>>>> 5babcd45253ab6cf9364e07ca4f0dce1bfb142f9
         window2["-END-"].update(visible=True)
         #[sg.Text("", key="-END-", visible=False)]
         #input("Press any key to return to main table...")
