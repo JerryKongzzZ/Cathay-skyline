@@ -1,0 +1,196 @@
+{
+  "data": {
+    "id": "510892B000014EBB",
+    "recordLocator": "68BE5O",
+    "isExactMatch": true,
+    "isUniqueMatch": true,
+    "segmentDeliveries": {
+      "collection": [
+        {
+          "ref": "#/included/segmentDeliveries/5009A2B00005D613"
+        }
+      ]
+    },
+    "traveler": {
+      "name": {
+        "firstName": "LAWRENCE",
+        "lastName": "SPENCE",
+        "prefix": "MR"
+      },
+      "gender": "M",
+      "passengerTypeCode": "A"
+    },
+    "flightManagementWeightRequirement": {
+      "isGenderToBeChecked": false
+    },
+    "purposeOfVisit": "TOURIST"
+  },
+  "dictionaries": {
+    "datedFlight": {
+      "CX049120231119TPE": {
+        "id": "CX049120231119TPE",
+        "legs": [
+          {
+            "boardPointIataCode": "TPE",
+            "offPointIataCode": "HKG",
+            "legDCSStatuses": {
+              "generalStatus": "OPEN",
+              "acceptanceStatus": "OPEN",
+              "boardingStatus": "NOT_OPEN",
+              "baggageStatus": "IGNORED",
+              "disruptionStatus": "NOT_DISRUPTED"
+            }
+          }
+        ],
+        "flightPoints": [
+          {
+            "iataCode": "TPE",
+            "departure": {
+              "timings": [
+                {
+                  "value": "2023-11-19T19:40:00",
+                  "qualifier": "STD"
+                },
+                {
+                  "value": "2023-11-19T19:10:00",
+                  "qualifier": "BOT"
+                }
+              ]
+            },
+            "arrival": {
+              "timings": [
+                {
+                  "value": "2023-11-19T21:45:00",
+                  "qualifier": "STA"
+                }
+              ]
+            }
+          },
+          {
+            "iataCode": "HKG"
+          }
+        ]
+      }
+    }
+  },
+  "included": {
+    "segmentDeliveries": {
+      "5009A2B00005D613": {
+        "id": "5009A2B00005D613",
+        "isPrime": false,
+        "dcsSegmentFlags": [
+          "DOCISSUE",
+          "SERVICES"
+        ],
+        "flightSegment": {
+          "departure": {
+            "iataCode": "TPE",
+            "terminal": "1",
+            "at": "2023-11-19T19:40:00"
+          },
+          "arrival": {
+            "iataCode": "HKG"
+          },
+          "class": "Y",
+          "cabin": "Y",
+          "status": "HK",
+          "operating": {
+            "carrierCode": "CX",
+            "number": "491"
+          }
+        },
+        "recordLocator": "68BE5O",
+        "passengerSegmentDisruption": {
+          "processState": {
+            "status": "NOT_DISRUPTED"
+          },
+          "productState": {
+            "status": "NOT_DISRUPTED"
+          }
+        },
+        "handlingCarrierCode": "CX",
+        "handlingSystem": "1A",
+        "fareFamilyName": "CX-ECONLIGHT",
+        "dcsProductType": "AS",
+        "bookingClass": "Y",
+        "legDeliveries": [
+          {
+            "id": "CX049120231119TPE",
+            "departure": {
+              "iataCode": "TPE",
+              "terminal": "1",
+              "at": "2023-11-19T19:40:00"
+            },
+            "arrival": {
+              "iataCode": "HKG",
+              "terminal": "1",
+              "at": "2023-11-19T21:45:00"
+            },
+            "operating": {
+              "carrierCode": "CX",
+              "number": "491"
+            },
+            "disruption": {
+              "status": "NOT_DISRUPTED"
+            },
+            "departureTerminal": "1",
+            "arrivalTerminal": "1",
+            "acceptance": {
+              "status": "CNA"
+            },
+            "boarding": {
+              "boardingStatus": "NOT_BOARDED",
+              "boardingPassPrint": {
+                "status": "NPT"
+              }
+            },
+            "regulatoryProgramsCheckStatuses": [
+              {
+                "regulatoryProgram": {
+                  "name": "ADC"
+                },
+                "isOverallSuccess": false,
+                "statuses": [
+                  {
+                    "isSuccessful": false,
+                    "statusCode": "NOT_PERFORMED"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "associatedTickets": [
+          {
+            "documentNumber": "1602387394932",
+            "documentType": "ETICKET",
+            "associationStatus": "ASSOCIATED"
+          }
+        ],
+        "candidateTickets": [
+          {
+            "documentNumber": "1602387394932",
+            "coupons": [
+              {
+                "number": 1
+              }
+            ]
+          }
+        ],
+        "services": [
+          {
+            "subtype": "SPECIAL_KEYWORD",
+            "id": "10000000218854B7",
+            "code": "BFLT",
+            "description": "YQ21TWAO",
+            "NIP": 1
+          }
+        ],
+        "volunteerDowngrade": "NOT_ASKED",
+        "volunteerDeniedBoarding": "NOT_ASKED",
+        "onwardReturnTicketExists": false,
+        "isRegulatoryDocumentRevalidationRequired": false
+      }
+    }
+  }
+}
