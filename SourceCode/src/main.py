@@ -440,6 +440,8 @@ def mainui(PassengerID):
                 event, value = window2.read()
                 if event == "-STOP-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
+                elif event == "-YES-":
+                    print(x + PassengerID)
         if event == '3':
             x = 0
             layout_food =[
@@ -452,6 +454,8 @@ def mainui(PassengerID):
                 event, value = window2.read()
                 if event == "-STOP-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
+                elif event == "-YES-":
+                    print(x + PassengerID)
         if event == 'Save':
             break
     return x
