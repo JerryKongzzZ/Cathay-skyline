@@ -1,6 +1,5 @@
-#import vertexai
-#from vertexai.language_models import TextGenerationModel, ChatModel, InputOutputTextPair
-
+import vertexai
+from vertexai.language_models import TextGenerationModel, ChatModel, InputOutputTextPair
 
 def main():
     vertexai.init(project="cathay-hackathon-405510", location="us-central1")
@@ -32,3 +31,7 @@ def main():
             input(),
             **parameters
         )
+        if response.text == "Goodbye!" or response.text == "Bye!" or response.text == "bye" or response.text == "goodbye":
+            break
+
+main()
