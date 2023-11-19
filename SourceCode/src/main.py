@@ -176,8 +176,9 @@ def main():
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
                         window2['-REPLY-'].update(bagAllowance(ans, ans2), visible=True)
-                    if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
+                        break
                 #window['-REPLY-'].update(bagAllowance(pidinput(), sidinput()), visible=True)
             case '3':
                 layout_basic = [
@@ -196,8 +197,9 @@ def main():
                         ans = ['-IN-']
                         ans2 = ['-IN2-']
                         window2['-REPLY-'].update(regulatoryRequirements(ans, ans2), visible=True)
-                    if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
                         window2.close()
+                        break
                 #window['-REPLY-'].update(regulatoryRequirements(pidinput(), sidinput()), visible=True)
             case '4':
                 layout_basic = [
@@ -219,8 +221,9 @@ def main():
                         ans2 = ['-IN2-']
                         ans3 = ['-IN3-']
                         window2['-REPLY-'].update(seatMap(ans, ans2, ans3), visible=True)
-                    if event == "-END-" or event == sg.WIN_CLOSED and window2 is not None:
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
+                        break
                 #window['-REPLY-'].update(seatMap(pidinput(), sidinput(), fidinput()), visible=True)
             case '5':
                 layout_basic = [
@@ -238,8 +241,9 @@ def main():
                     if event =='Send':
                         ans = ['-IN-']
                         window2['-REPLY-'].update(flightDetails(ans), visible=True)
-                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
+                        break
                 #window['-REPLY-'].update(flightDetails(fidinput()), visible=True)
             case '6':
                 layout_basic = [
@@ -257,8 +261,9 @@ def main():
                     if event =='Send':
                         ans = ['-IN-'] ##
                         window2['-REPLY-'].update(preorderSystem(ans), visible=True)
-                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
+                    if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:    
                         window2.close()
+                        break
 
             case '_':
                 break
