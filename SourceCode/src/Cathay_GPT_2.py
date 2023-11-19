@@ -23,7 +23,7 @@ def main():
     )
 
     response = chat_model.send_message(
-        """""",
+        """You are an assistant chatbot for an airline company""",
         **parameters
     )
     while True:
