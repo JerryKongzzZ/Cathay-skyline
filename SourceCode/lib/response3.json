@@ -1,0 +1,79 @@
+{
+  "warnings": [
+    {
+      "code": 14474,
+      "title": "Functional Error",
+      "detail": "Missing nationality",
+      "pointer": "/departure-control/dcs-passengers/by-segment?segmentId=5009A2B00005D613"
+    }
+  ],
+  "data": [
+    {
+      "id": "510892B000014EBB",
+      "segmentDeliveries": [
+        {
+          "id": "5009A2B00005D613",
+          "ref": "#/included/segmentDeliveries/5009A2B00005D613"
+        }
+      ]
+    }
+  ],
+  "included": {
+    "segmentDeliveries": {
+      "5009A2B00005D613": {
+        "id": "5009A2B00005D613",
+        "isRegulatoryDocumentRevalidationRequired": false,
+        "apisStatus": "NOT_PERFORMED",
+        "legDeliveries": [
+          {
+            "departure": {
+              "iataCode": "TPE"
+            },
+            "isRegulatoryChecksSuccessful": false,
+            "regulatoryChecks": [
+              {
+                "id": "5009A2B00005D613IAPTWN",
+                "ref": "#/dictionaries/regulatoryRequirements/5009A2B00005D613IAPTWN"
+              },
+              {
+                "id": "5009A2B00005D613ADCTPE",
+                "ref": "#/dictionaries/regulatoryRequirements/5009A2B00005D613ADCTPE"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "dictionaries": {
+    "regulatoryRequirements": {
+      "5009A2B00005D613ADCTPE": {
+        "regulatoryProgram": {
+          "name": "ADC"
+        },
+        "isOverallSuccess": false,
+        "statuses": [
+          {
+            "isSuccessful": false,
+            "statusCode": "NOT_PERFORMED"
+          }
+        ]
+      },
+      "5009A2B00005D613IAPTWN": {
+        "regulatoryProgram": {
+          "name": "IAP",
+          "countryCode": "TWN"
+        },
+        "isOverallSuccess": false,
+        "statuses": [
+          {
+            "statusType": "SECURITY",
+            "isSuccessful": false,
+            "statusCode": "NPE",
+            "humanReadableDescription": "Not Performed"
+          }
+        ]
+      }
+    }
+  }
+}

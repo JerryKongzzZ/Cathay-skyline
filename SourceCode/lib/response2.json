@@ -1,0 +1,46 @@
+{
+  "data": [
+    {
+      "isPooledAllowance": false,
+      "dcsPassengers": [
+        {
+          "id": "510892B000014EBB"
+        }
+      ],
+      "segmentDeliveries": [
+        {
+          "id": "5009A2B00005D613",
+          "flightSegment": {
+            "departure": {
+              "iataCode": "TPE"
+            },
+            "arrival": {
+              "iataCode": "HKG"
+            }
+          }
+        }
+      ],
+      "baggageGroupAllowances": {
+        "baggageGroupAllowance": {
+          "quantity": 1,
+          "baggageAllowance": "TOTAL_ALLOWANCE"
+        },
+        "baggageAllowanceBreakdowns": [
+          {
+            "quantity": 1,
+            "baggageAllowance": "ADULT_ALLOWANCE"
+          },
+          {
+            "weight": {
+              "amount": "24",
+              "value": 24,
+              "decimalPlaces": 0,
+              "unit": "KILOGRAMS"
+            },
+            "baggageAllowance": "WEIGHT_PER_PIECE"
+          }
+        ]
+      }
+    }
+  ]
+}
