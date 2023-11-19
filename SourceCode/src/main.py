@@ -108,8 +108,8 @@ def main():
     styling_str = str(styling) 
     layout_main = [
         [sg.Text(styling_str)],
-        [sg.Text("Table of Functions: \n 1.Search passengers based on passenger ID. \n 2.Search passengers bag allowance based on passenger ID and segment ID. \n 3.Search passengers regulatory requirements based on passenger ID and segment ID. \n 4.Search passengers seatMap based on passenger ID and segment ID. \n 5.Search flight details based on flight number.")],
-        [sg.Text("Input 1, 2, 3, 4 or 5 for one of the functions, otherwise automatically terminating: ")],
+        [sg.Text("Table of Functions: \n 1.Search passengers based on passenger ID. \n 2.Search passengers bag allowance based on passenger ID and segment ID. \n 3.Search passengers regulatory requirements based on passenger ID and segment ID. \n 4.Search passengers seatMap based on passenger ID and segment ID. \n 5.Search flight details based on flight number. \n 6. Pre-order food choices for your upcoming flight")],
+        [sg.Text("Input 1, 2, 3, 4, 5 or 6 for one of the functions, otherwise automatically terminating: ")],
         [sg.Input(key='-IN-')],
         [sg.Button('Enter'), sg.Button('Exit')],
         #[sg.Text("",key='-CON-', auto_size_text=True, visible=False)]
@@ -258,7 +258,8 @@ def main():
                         window2['-REPLY-'].update(preorderSystem(ans), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
                         window2.close()
-            case _:
+
+            case '_':
                 break
         window2["-END-"].update(visible=True)
         #[sg.Text("", key="-END-", visible=False)]
