@@ -155,9 +155,10 @@ def main():
                 #window2['-DYNAMIC-'].update(pidinput)
                     if event =='Send':
                         ans = ['-IN-']
-                        window2['-REPLY-'].update(passengers(ans), visible=True)
+                        window2['-REPLY-'].update(passengers(''.join(ans)), visible=True)
                     if event == "-END-" or event == sg.WINDOW_CLOSED and window2 is not None:
                         window2.close()
+                        break
             case '2':
                 layout_basic = [
                 [sg.Text(pidinput)],
